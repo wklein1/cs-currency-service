@@ -33,7 +33,7 @@ def test_get_currency_exchange_rate():
     
     expected_key = "exchangeRate"
     #ACT
-    response = client.get("/currencies/EUR/JPN")
+    response = client.get("/currencies/EUR/USD")
     #ASSERT
     assert response.status_code == 200
     assert response.json()[expected_key]

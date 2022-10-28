@@ -3,9 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from decouple import config
 from modules.csv import csv_reader
 from models import currency_models, error_models
+import requests
 import deta
 
 PROJECT_KEY = config("PROJECT_KEY")
+EXCHANGE_RATE_API_KEY = config("EXCHANGE_RATE_API_KEY")
 
 deta = deta.Deta(PROJECT_KEY)
 currenciesDB = deta.Base("currencies")
@@ -54,3 +56,29 @@ async def get_currencies():
         return currenciesDB.fetch().items
     except:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Error while connecting to database")
+
+def forward_request(old_currency,new_currency):
+
+    url = f"https://currencyapi.net/api/v1/rates?key={EXCHANGE_RATE_API_KEY}&output=JSON"
+    
+    response = requests.request("GET", url)
+    rates_obj = response.json()
+
+    old_to_usd = 1/rates_obj["rates"][old_currency]
+    old_to_new = old_to_usd * rates_obj["rates"][new_currency]
+    exchange_obj = {"exchange_rate":old_to_new}
+
+    return exchange_obj
+
+
+@app.get(
+    "/currencies/{old_currency_code}/{new_currency_code}",
+    response_model=currency_models.ExchangeRateResponseModel,
+    response_description="Returns exchangerate from old currency to new",
+    description="Get exchangerate from old currency to new.",    
+)
+async def get_currency_exchange_rate(old_currency_code, new_currency_code):
+    return forward_request(old_currency_code, new_currency_code)
+
+
+
