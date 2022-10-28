@@ -23,3 +23,11 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["*"],
 )
+
+@app.get(
+    "/currencies",
+    response_description="Returns list of available currencies",
+    description="Get all available currencies.",    
+)
+async def get_currencies():
+    return currenciesDB.fetch().items
