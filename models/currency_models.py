@@ -5,3 +5,6 @@ class CurrencyModel(CustomBaseModel):
     symbol: str
     name: str
     country: str
+
+class ExchangeRateResponseModel(CustomBaseModel):
+    exchange_rate: str
