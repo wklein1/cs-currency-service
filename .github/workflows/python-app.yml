@@ -24,6 +24,7 @@ jobs:
          touch .env
          echo PROJECT_KEY=${{ secrets.PROJECT_KEY }} >> .env
          echo TEST_USER_ID=${{ secrets.TEST_USER_ID }} >> .env
+         echo EXCHANGE_RATE_API_KEY=${{ secrets.EXCHANGE_RATE_API_KEY }} >> .env
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
