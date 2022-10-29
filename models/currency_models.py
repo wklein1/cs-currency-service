@@ -8,4 +8,4 @@ class CurrencyModel(CustomBaseModel):
     country: str
 
 class ExchangeRateResponseModel(CustomBaseModel):
-    exchange_rate: str
+    exchange_rate: float
