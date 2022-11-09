@@ -4,7 +4,9 @@
 
 ![currency_service](https://user-images.githubusercontent.com/75163928/200688461-2385e51d-5e15-48f1-957c-7bed179c1334.jpg)
 
-A fullstack application project with microservice architecture backend. (Work in progress)
+A fullstack web application project with microservice architecture backend.
+
+(Work in progress)
 
 Tech Stack: React, FastApi, Deta (noSQL cloud DB)
 
